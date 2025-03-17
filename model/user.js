@@ -11,7 +11,6 @@ class User extends Model {
       type: 'object',
       required: ['name'],
       properties: {
-        id: { type: 'integer' },
         name: { type: 'string', minLength: 1, maxLength: 255 },
       },
     };

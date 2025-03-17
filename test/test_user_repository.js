@@ -6,10 +6,11 @@ const Knex = require('knex');
 const knexConfig = require('../knexfile').test;
 const knex = Knex(knexConfig);
 
-const UserRepository = require('../repository/user_repository');
+const Repository = require('../repository/repository');
+const User = require('../model/user');
 
 describe('User Repository Tests', () => {
-    const user_repository = new UserRepository();
+    const user_repository = new Repository(User);
 
     before(async () => {
         await knex.migrate.down();

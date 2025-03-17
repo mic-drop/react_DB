@@ -2,13 +2,12 @@
 const Knex = require('knex');
 const knexConfig = require('../knexfile').test;
 const knex = Knex(knexConfig);
-const User = require('../model/user');
 
-class UserRepository {
+class Repository {
 
-    constructor() {
-      this.model = User;
-      User.knex(knex);
+    constructor(Model) {
+      this.model = Model;
+      this.model.knex(knex);
     }
   
     async findAll() {
@@ -32,4 +31,4 @@ class UserRepository {
     }
   }
   
-  module.exports = UserRepository;
+  module.exports = Repository;
