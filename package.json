@@ -7,7 +7,7 @@
     "test": "npx lab"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mic Drop",
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^21.4.0",
