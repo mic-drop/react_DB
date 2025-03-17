@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx lab"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^21.4.0",
+    "@hapi/hoek": "^11.0.7",
+    "joi": "^17.13.3",
+    "knex": "^3.1.0",
+    "mysql2": "^3.13.0",
+    "objection": "^3.1.5",
+    "pg": "^8.14.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@hapi/code": "^9.0.3",
+    "@hapi/lab": "^26.0.0"
+  }
+}
