@@ -3,10 +3,6 @@ const { expect } = require('@hapi/code');
 const DatabaseFixture = require('../databasefixture');
 const { describe, it } = exports.lab = DatabaseFixture.script();
 
-const Knex = require('knex');
-const knexConfig = require('../../knexfile').test;
-const knex = Knex(knexConfig);
-
 const Repository = require('../../repository/repository');
 const User = require('../../model/user');
 

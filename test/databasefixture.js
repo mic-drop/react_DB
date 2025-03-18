@@ -2,36 +2,40 @@ const Lab = require('@hapi/lab');
 const Hoek = require('@hapi/hoek');
 const Knex = require('knex');
 const knexConfig = require('../knexfile').test;
-const knex = Knex(knexConfig);
 
+let knexInstance;
 /**
  * A simple DatabaseFixture to initialize, populate, clean up, and destroy
  * the test database.
  */
+
 const DatabaseFixture = {
     async init() {
-        await knex.migrate.down();
-        await knex.migrate.up();
-        await knex.seed.run({ env: 'test' });
-        return knex;
+        if(!knexInstance){
+           knexInstance = Knex(knexConfig); 
+        }
+        await knexInstance.migrate.down();
+        await knexInstance.migrate.up();
+        await knexInstance.seed.run({ env: 'test' });
+        return knexInstance;
     },
-    async populate(knexInstance) {
-        await knex.seed.run({ env: 'test' });
+    async populate() {
+        await knexInstance.seed.run({ env: 'test' });
     },
-    async truncate(knexInstance) {
+    async truncate() {
         // Truncate tables to remove any changes made during the test
         // Adjust the table names as necessary or implement a strategy DP
         await knexInstance('users').truncate();
     },
-    async destroy(knexInstance) {
+    async destroy() {
         await knexInstance.destroy();
+        knexInstance = null;
     }
 };
 
 exports.script = function () {
-    const lab = Lab.script();
+    const lab = Lab.script({parallel: false});
     const { describe, it, before, after, beforeEach, afterEach } = lab;
-    let knexInstance;
 
     // Wraps the describe call to provide centralized test setup/teardown
     lab.describe = (title, callback) => {
@@ -43,17 +47,17 @@ exports.script = function () {
 
             beforeEach(async () => {
                 // Ensures the database is populated with seed data before each test
-                await DatabaseFixture.populate(knexInstance);
+                await DatabaseFixture.populate();
             });
 
             afterEach(async () => {
                 // Cleans up any changes from the test
-                await DatabaseFixture.truncate(knexInstance);
+                await DatabaseFixture.truncate();
             });
 
             after(async () => {
                 // Destroys the database connection once all tests are done
-                await DatabaseFixture.destroy(knexInstance);
+                await DatabaseFixture.destroy();
             });
 
             callback();

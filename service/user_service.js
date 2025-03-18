@@ -6,23 +6,23 @@ const internals = {
 }
 
 exports.findById = async (id) => {
-    const user = await userRepo.findById(id);
+    const user = await internals.userRepo.findById(id);
     return user;
 }
 
 exports.findAll = async () => {
-    const user = await userRepo.findAll();
+    const user = await internals.userRepo.findAll();
     return user;
 }
 
 exports.add = async (user) => {
-    const user = await userRepo.add(user);
+    const addedUser = await internals.userRepo.create(user);
 
-    return user.id;
+    return addedUser.id;
 }
 
 exports.delete = async (id) => {
-    const id = await userRepo.delete(id);
+    const deletedRows = await internals.userRepo.delete(id);
 
-    return id;
+    return deletedRows;
 }
