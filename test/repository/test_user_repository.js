@@ -3,11 +3,11 @@ const { expect } = require('@hapi/code');
 const { describe, it, before } = exports.lab = Lab.script();
 
 const Knex = require('knex');
-const knexConfig = require('../knexfile').test;
+const knexConfig = require('../../knexfile').test;
 const knex = Knex(knexConfig);
 
-const Repository = require('../repository/repository');
-const User = require('../model/user');
+const Repository = require('../../repository/repository');
+const User = require('../../model/user');
 
 describe('User Repository Tests', () => {
     const user_repository = new Repository(User);
@@ -37,4 +37,15 @@ describe('User Repository Tests', () => {
         expect(newUser).to.equal(await user_repository.findById(3));
     })
 
+    it('it should be able to delete user', async () => {
+        const deleteId = 3;
+
+        const deletedRows = await user_repository.delete(deleteId);
+        const userList = await user_repository.findAll();
+        const deletedUser = await user_repository.findById(deleteId);
+
+        expect(deletedRows).to.equal(1);
+        expect(deletedUser).to.equal(undefined);
+        expect(userList.length).to.equal(2);
+    })
 });

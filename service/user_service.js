@@ -23,4 +23,6 @@ exports.add = async (user) => {
 
 exports.delete = async (id) => {
     const id = await userRepo.delete(id);
+
+    return id;
 }
