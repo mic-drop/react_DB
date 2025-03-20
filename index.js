@@ -12,7 +12,11 @@ const init = async () => {
     port: 3000
   });
 
+  await knexInstance.migrate.down();
+  await knexInstance.migrate.up();
+  await knexInstance.seed.run({ env: 'test' });
   server.app.knex = knexInstance;
+
 
   // Register all endpoints from the array
   server.route(endpoints);
