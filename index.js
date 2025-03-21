@@ -1,20 +1,20 @@
 const Hapi = require('@hapi/hapi');
+const knexSingleton = require('./knex_singleton');
+knexSingleton.setEvn('dev');
 const { endpoints } = require('./routes'); 
 
-
-const Knex = require('knex');
-const knexConfig = require('./knexfile').test;
-const knexInstance = Knex(knexConfig);
 
 const init = async () => {
   const server = Hapi.server({
     host: 'localhost',
     port: 3000
   });
-
+  
+  const knexInstance = knexSingleton.getInstance();
+  
   await knexInstance.migrate.down();
   await knexInstance.migrate.up();
-  await knexInstance.seed.run({ env: 'test' });
+  await knexInstance.seed.run({ env: 'dev' });
   server.app.knex = knexInstance;
 
 

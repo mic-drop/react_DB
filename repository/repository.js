@@ -1,7 +1,6 @@
 
-const Knex = require('knex');
-const knexConfig = require('../knexfile').test;
-const knex = Knex(knexConfig);
+const knexSingleton = require('../knex_singleton');
+const knex = knexSingleton.getInstance();
 
 class Repository {
 
