@@ -11,8 +11,9 @@ let knexInstance = knexSingleton.getInstance();
 
 const DatabaseFixture = {
     async init() {
-        if(!knexInstance){
-           knexInstance = knexSingleton.getInstance(); 
+        if (!knexInstance) {
+            knexSingleton.setEvn('test');
+            knexInstance = knexSingleton.getInstance();
         }
         await knexInstance.migrate.down();
         await knexInstance.migrate.up();
@@ -28,13 +29,12 @@ const DatabaseFixture = {
         await knexInstance('users').truncate();
     },
     async destroy() {
-        await knexInstance.destroy();
         knexInstance = null;
     }
 };
 
 exports.script = function () {
-    const lab = Lab.script({parallel: false});
+    const lab = Lab.script({ parallel: false });
     const { describe, it, before, after, beforeEach, afterEach } = lab;
 
     // Wraps the describe call to provide centralized test setup/teardown
