@@ -1,5 +1,5 @@
-const User = require('../model/user')
-const Repository = require('../repository/repository.js')
+const User = require('../model/user.js');
+const Repository = require('../persistence/repository/repository');
 
 const internals = {
     userRepo: new Repository(User)

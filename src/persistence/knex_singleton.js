@@ -1,19 +1,18 @@
 const Knex = require('knex');
-const knexConfig = require('./knexfile');
+const knexConfig = require('../../knexfile');
 
 let knexInstance;
-let environment; 
-exports.setEvn =  (env) => {
+let environment;
+exports.setEvn = (env) => {
     environment = env;
 }
 
-exports.getInstance =  () => {
+exports.getInstance = () => {
 
-    if(!knexConfig)
-    {
+    if (!knexConfig) {
         return;
     }
-    if(!knexInstance){
+    if (!knexInstance) {
         knexInstance = Knex(knexConfig[environment]);
     }
     return knexInstance;

@@ -1,7 +1,4 @@
 const Hapi = require('@hapi/hapi');
-const knexSingleton = require('./knex_singleton');
-knexSingleton.setEvn('dev');
-const { endpoints } = require('./routes'); 
 
 
 const init = async () => {
@@ -9,14 +6,8 @@ const init = async () => {
     host: 'localhost',
     port: 3000
   });
-  
-  const knexInstance = knexSingleton.getInstance();
-  
-  await knexInstance.migrate.down();
-  await knexInstance.migrate.up();
-  await knexInstance.seed.run({ env: 'dev' });
-  server.app.knex = knexInstance;
 
+  const { endpoints } = require('./routes');
 
   // Register all endpoints from the array
   server.route(endpoints);
@@ -30,4 +21,6 @@ process.on('unhandledRejection', (err) => {
   process.exit(1);
 });
 
-init();
+exports.start = async function () {
+  init();
+}

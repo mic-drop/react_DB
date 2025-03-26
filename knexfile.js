@@ -1,16 +1,17 @@
+//use env variables to conceal your credentials 
 require('dotenv').config();
 
 module.exports = {
   test: {
     client: 'sqlite3',
     connection: {
-      filename: './db/test.sqlite3'
+      filename: './data_resources/db/test.sqlite3'
     },
     migrations: {
-      directory: './migrations/test'
+      directory: './data_resources/migrations/test'
     },
     seeds: {
-      directory: './seeds/test'
+      directory: './data_resources/seeds/test'
     },
     useNullAsDefault: true
   },
@@ -24,10 +25,10 @@ module.exports = {
       database: process.env.DB_NAME
     },
     migrations: {
-      directory: './migrations/dev'
+      directory: './data_resources/migrations/dev'
     },
     seeds: {
-      directory: './seeds/dev'
+      directory: './data_resources/seeds/dev'
     }
   },
 
@@ -40,10 +41,10 @@ module.exports = {
       database: 'prod_db'
     },
     migrations: {
-      directory: './migrations/prod'
+      directory: './data_resources/migrations/prod'
     },
     seeds: {
-      directory: './seeds/prod'
+      directory: './data_resources/seeds/prod'
     }
   }
 };
