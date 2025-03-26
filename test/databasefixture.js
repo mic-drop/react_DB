@@ -1,9 +1,9 @@
 const Lab = require('@hapi/lab');
 const Hoek = require('@hapi/hoek');
-const Knex = require('knex');
-const knexConfig = require('../knexfile').test;
+const knexSingleton = require('../src/persistence/knex_singleton');
+knexSingleton.setEvn("test");
+let knexInstance = knexSingleton.getInstance();
 
-let knexInstance;
 /**
  * A simple DatabaseFixture to initialize, populate, clean up, and destroy
  * the test database.
@@ -12,7 +12,7 @@ let knexInstance;
 const DatabaseFixture = {
     async init() {
         if(!knexInstance){
-           knexInstance = Knex(knexConfig); 
+           knexInstance = knexSingleton.getInstance(); 
         }
         await knexInstance.migrate.down();
         await knexInstance.migrate.up();

@@ -1,12 +1,11 @@
-const Lab = require('@hapi/lab');
 const { expect } = require('@hapi/code');
 const DatabaseFixture = require('../databasefixture');
 const { describe, it } = exports.lab = DatabaseFixture.script();
 
-const Repository = require('../../repository/repository');
-const User = require('../../model/user');
 
 describe('User Repository Tests', () => {
+    const Repository = require('../../src/persistence/repository/repository');
+    const User = require('../../src/model/user');
     const user_repository = new Repository(User);
 
 
